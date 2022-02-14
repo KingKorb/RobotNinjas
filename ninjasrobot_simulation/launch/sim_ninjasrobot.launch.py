@@ -71,24 +71,24 @@ def generate_launch_description():
         arguments=["-d", LaunchConfiguration("rvizconfig")],
     )
 
-    # execute_gazebo = ExecuteProcess(
-    #     cmd=[
-    #         "gazebo",
-    #         "--verbose",
-    #         "-s",
-    #         "libgazebo_ros_init.so",
-    #         "-s",
-    #         "libgazebo_ros_factory.so",
-    #     ],
-    #     output="screen",
-    # )
+    gazebo_process = ExecuteProcess(
+        cmd=[
+            "gazebo",
+            "--verbose",
+            "-s",
+            "libgazebo_ros_init.so",
+            "-s",
+            "libgazebo_ros_factory.so",
+        ],
+        output="screen",
+    )
 
-    # spawn_entity = launch_ros.actions.Node(
-    # package='gazebo_ros',
-    # executable='spawn_entity.py',
-    # arguments=['-entity', 'sam_bot', '-topic', 'robot_description'],
-    # output='screen'
-    # )
+    spawn_entity = Node(
+    package='gazebo_ros',
+    executable='spawn_entity.py',
+    arguments=['-entity', 'ninjasrobot', '-topic', 'robot_description'],
+    output='screen'
+    )
 
     # robot_localization_node = launch_ros.actions.Node(
     #    package='robot_localization',
@@ -107,7 +107,8 @@ def generate_launch_description():
             joint_state_publisher_node,
             joint_state_publisher_gui_node,
             robot_state_publisher_node,
-            # spawn_entity,
+            gazebo_process,
+            spawn_entity,
             # robot_localization_node,
             rviz_node,
         ]
