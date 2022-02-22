@@ -107,11 +107,11 @@ def generate_launch_description():
             rviz_arg,
             sim_time_arg,
             joint_state_publisher_node,
-            joint_state_publisher_gui_node,
-            robot_state_publisher_node,
+            # joint_state_publisher_gui_node,
             gazebo_process,
             spawn_entity,
             robot_localization_node,
+            robot_state_publisher_node,
             rviz_node,
         ]
     )

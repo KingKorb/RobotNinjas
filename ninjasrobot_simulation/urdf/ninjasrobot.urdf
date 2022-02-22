@@ -123,51 +123,73 @@
   <gazebo reference="drivewhl_l_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  
+
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" color="black" />
   <gazebo reference="drivewhl_r_link">
     <material>Gazebo/Black</material>
   </gazebo>
 
-  <xacro:wheel prefix="frontwhl_l" x_reflect="1" y_reflect="1" color="black" />
-  <gazebo reference="frontwhl_l_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <material>Gazebo/Black</material>
-  </gazebo>
-
-  <xacro:wheel prefix="frontwhl_r" x_reflect="1" y_reflect="-1" color="black" />
-  <gazebo reference="frontwhl_r_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <material>Gazebo/Black</material>
-  </gazebo>
-
-  <!-- <link name="front_caster">
+  <link name="frontwhl_l_link">
     <visual>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
       <geometry>
-        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}" />
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
       </geometry>
-      <material name="Cyan">
-        <color rgba="0 1.0 1.0 1.0" />
-      </material>
+      <material name="grey" />
     </visual>
 
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
       <geometry>
-        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}" />
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
       </geometry>
     </collision>
 
-    <xacro:sphere_inertia m="0.5" r="${(wheel_radius+wheel_zoff-(base_height/2))}" />
+    <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
   </link>
+  <gazebo reference="frontwhl_l_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/Gray</material>
+  </gazebo>
 
-  <joint name="caster_joint" type="fixed">
+  <joint name="frontwhl_l_joint" type="fixed">
     <parent link="base_link" />
-    <child link="front_caster" />
-    <origin xyz="${caster_xoff} 0.0 ${-(base_height/2)}" rpy="0 0 0" />
-  </joint> -->
+    <child link="frontwhl_l_link" />
+    <origin xyz="${wheel_xoff} ${base_width/2+wheel_ygap} ${-wheel_zoff}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <link name="frontwhl_r_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
+      </geometry>
+      <material name="grey" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}" />
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
+  </link>
+  <gazebo reference="frontwhl_r_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/Gray</material>
+  </gazebo>
+
+  <joint name="frontwhl_r_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="frontwhl_r_link" />
+    <origin xyz="${wheel_xoff} ${-(base_width/2+wheel_ygap)} ${-wheel_zoff}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
 
   <link name="imu_link">
     <visual>
