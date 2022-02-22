@@ -90,13 +90,13 @@ def generate_launch_description():
     output='screen'
     )
 
-    # robot_localization_node = launch_ros.actions.Node(
-    #    package='robot_localization',
-    #    executable='ekf_node',
-    #    name='ekf_filter_node',
-    #    output='screen',
-    #    parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    # )
+    robot_localization_node = Node(
+       package='robot_localization',
+       executable='ekf_node',
+       name='ekf_filter_node',
+       output='screen',
+       parameters=[str(pkg_share_path / 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    )
 
     return LaunchDescription(
         [
@@ -109,7 +109,7 @@ def generate_launch_description():
             robot_state_publisher_node,
             gazebo_process,
             spawn_entity,
-            # robot_localization_node,
+            robot_localization_node,
             rviz_node,
         ]
     )
