@@ -373,7 +373,7 @@
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
     </inertial>
   </link>
-  <gazebo reference="drivewhl_l_link">
+  <gazebo reference="camera_link">
     <material>Gazebo/Gold</material>
   </gazebo>
 
@@ -381,7 +381,7 @@
   <joint name="camera_joint" type="fixed">
     <parent link="base_link" />
     <child link="camera_link" />
-    <origin xyz="0.215 0 0.05" rpy="0 0 0" />
+    <origin xyz="0.245 0 0.05" rpy="0 0 0" />
   </joint>
 
   <link name="camera_depth_frame" />
