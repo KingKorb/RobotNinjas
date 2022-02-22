@@ -11,6 +11,7 @@ def generate_launch_description():
     pkg_share_path = get_package_share_path("ninjasrobot_simulation")
     default_urdf_path = pkg_share_path / "urdf/ninjasrobot.urdf"
     default_rviz_config_path = pkg_share_path / "rviz/ninjasrobot.rviz"
+    world_path = pkg_share_path / "worlds/starting_pen.sdf"
 
     gui_arg = DeclareLaunchArgument(
         name="gui",
@@ -79,6 +80,7 @@ def generate_launch_description():
             "libgazebo_ros_init.so",
             "-s",
             "libgazebo_ros_factory.so",
+            str(world_path),
         ],
         output="screen",
     )
