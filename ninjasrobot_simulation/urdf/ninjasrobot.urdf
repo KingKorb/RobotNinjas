@@ -75,6 +75,9 @@
 
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}" />
   </link>
+  <gazebo reference="base_link">
+    <material>Gazebo/Turquoise</material>
+  </gazebo>
 
   <!-- Robot Footprint -->
   <link name="base_footprint">
@@ -117,9 +120,28 @@
   </xacro:macro>
 
   <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" color="black" />
+  <gazebo reference="drivewhl_l_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" color="black" />
+  <gazebo reference="drivewhl_r_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <xacro:wheel prefix="frontwhl_l" x_reflect="1" y_reflect="1" color="black" />
+  <gazebo reference="frontwhl_l_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
   <xacro:wheel prefix="frontwhl_r" x_reflect="1" y_reflect="-1" color="black" />
+  <gazebo reference="frontwhl_r_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
 
   <!-- <link name="front_caster">
     <visual>
@@ -272,14 +294,12 @@
       <mass value="0.125" />
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
     </inertial>
-
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <cylinder radius="0.0508" length="0.055" />
       </geometry>
     </collision>
-
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -288,6 +308,9 @@
       <material name="purple" />
     </visual>
   </link>
+  <gazebo reference="lidar_link">
+    <material>Gazebo/Purple</material>
+  </gazebo>
 
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link" />
@@ -338,20 +361,22 @@
       </geometry>
       <material name="orange" />
     </visual>
-
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <box size="0.015 0.130 0.022" />
       </geometry>
     </collision>
-
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <mass value="0.035" />
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
     </inertial>
   </link>
+  <gazebo reference="drivewhl_l_link">
+    <material>Gazebo/Gold</material>
+  </gazebo>
+
 
   <joint name="camera_joint" type="fixed">
     <parent link="base_link" />
