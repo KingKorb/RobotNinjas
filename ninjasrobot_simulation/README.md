@@ -10,11 +10,11 @@ mkdir -p ninjasrobot_ws/src
 cd ~/ninjasrobot_ws/src
 git@github.com:KingKorb/RobotNinjas.git
 cd ..
-colcon build
+colcon build --packages-select ninjasrobot_simulation
 ```
 3. Launch simulation
 ```bash
-source ~/ninjasrobot_ws/install/setup.bash
+source ~/ninjasrobot_ws/install/local_setup.bash
 ros2 launch ninjasrobot_simulation sim_ninjasrobot.launch.py 
 ```
 
