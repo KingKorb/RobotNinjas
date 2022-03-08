@@ -1,6 +1,6 @@
 """
 Test robot velocity control via proportional controller.
-Cathes motors' responses along a sinusoidal signal.
+Cathes motors' responses toward a sinusoidal signal.
 """
 from time import sleep, time
 from gpiozero import PhaseEnableRobot, Robot, LED
