@@ -1,6 +1,6 @@
 """
 Test robot's velocity control using PI controller.
-This test cathes motors' resonses against a step signal.
+This test cathes motors' resonses toward a step signal.
 """
 from time import sleep, time
 from gpiozero import PhaseEnableRobot, Robot, LED
