@@ -11,3 +11,12 @@ git add .  # stage changed files, locally
 git commit -m "<whatever description regarding the changes>"  # commit changed files, locally
 git push origin main  # upload local changes to github
 ```
+
+# Usage
+```shell
+cd ~/dev_ws
+colcon build --symlink-install
+source install/setup.bash
+ros2 run bringup_ninjasrobot ninjasrobot_core
+```
+Try to remote control it with `teleop_twist_keyboard`
