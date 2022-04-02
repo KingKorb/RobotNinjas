@@ -1,4 +1,7 @@
-# Git and Github
+# Note:
+Only work in the `gps_navigation` folder.
+
+### Git and Github
 ```shell
 cd ~/dev_ws/src/RobotNinjas/
 git config user.name "<user1 or user2 or otheruser's name>"  # sign up
