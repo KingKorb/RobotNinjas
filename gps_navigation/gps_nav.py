@@ -114,15 +114,14 @@ try:
             if np.sqrt(x**2+y**2) < 2:  # tweak this number so that robot find next target earlier or later
                  i += 1
             # debugging prints
-            print('---')
             print(f'current target: {i+1}')
-            print(f'distance to target: {np.linalg.norm((x,y))}')
-            print(f'robot pose (Geodetic): {Lat, Long, Ori}')
-            print(f'target location: {x, y}')
-            print(f'angle offset: {del_theta}')
-            
+            print(f'distance to target: {np.linalg.norm((x,y))} m')
+            print(f'robot pose (Geodetic): {Lat} deg, {Long} deg, {Ori} deg')
+            print(f'target location: {x, y} m')
+            print(f'angle offset: {np.rad2deg(del_theta)} deg')
+            print('---\n')
+
             time.sleep(.05)
             
 except KeyboardInterrupt:  # ctrl-c to stop robot
     GPIO.cleanup()
-    
