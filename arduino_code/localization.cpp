@@ -11,10 +11,14 @@
 #include <math.h>
 #include <TinyGPSPlus.h>
 #include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_HMC5883_U.h>
-/* Assign a unique ID to magnetometer at the same time */
-Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(121);
+#include <MPU6050.h>
+
+MPU6050 mpu;
+
+//#include <Adafruit_Sensor.h>
+//#include <Adafruit_HMC5883_U.h>
+///* Assign a unique ID to magnetometer at the same time */
+//Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(121);
 
 static const uint32_t GPSBaud = 9600;
 
@@ -33,36 +37,13 @@ static void smartDelay(unsigned long ms)
   } while (millis() - start < ms);
 }
 
-void displaySensorDetails(void)
-{
-  sensor_t sensor;
-  mag.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
-  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
-  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
-  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" uT");
-  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" uT");
-  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" uT");  
-  Serial.println("------------------------------------");
-  Serial.println("");
-  delay(500);
-}
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(115200); 
   Serial1.begin(GPSBaud);
-
-  /* Initialise magnetometer */
-  if(!mag.begin())
-  {
-    /* There was a problem detecting the HMC5883 ... check your connections */
-    Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
-    while(1);
-  }
-  /* Display some basic information on magnetometer */
-  //  displaySensorDetails();
+  mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G);
+  mpu.setThreshold(3);
 
 }
 
@@ -70,8 +51,8 @@ void loop()
 {
   //  print magnetometer data
   /* Get a new sensor event */ 
-  sensors_event_t event; 
-  mag.getEvent(&event);
+//  sensors_event_t event; 
+//  mag.getEvent(&event);
  
   /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
   //  Serial.print("X: "); Serial.print(event.magnetic.x); Serial.print("  ");
@@ -81,14 +62,14 @@ void loop()
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
   //float heading = atan2(event.magnetic.x, event.magnetic.y);
-  float heading = atan2(event.magnetic.x, event.magnetic.y);
+//  float heading = atan2(event.magnetic.x, event.magnetic.y);
   
   // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
   // Find yours here: http://www.magnetic-declination.com/
   // Mine is: +0* 2' E, which is ~0.03 Degrees, or (which we need) 0.0006 radians
   // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  float declinationAngle = -0.0006;
-  heading += declinationAngle;
+//  float declinationAngle = -0.0006;
+//  heading += declinationAngle;
   
   // Correct for when signs are reversed.
 //  if(heading < 0)
@@ -103,15 +84,18 @@ void loop()
   
   //  Serial.print("Heading (degrees): "); 
 
-  //  print GPS & Magnetometer data
+//  Vector rawGyro = mpu.readRawGyro();
+  Vector normGyro = mpu.readNormalizeGyro();
+
+  //  print GPS & Gyro data
   Serial.print(gps.location.lat(), 5);
   Serial.print(",");
   Serial.print(gps.location.lng(), 5);
   Serial.print(",");
 //  Serial.println(headingDegrees);
-  Serial.println(heading);
+  Serial.println(normGyro.ZAxis);
 //  delay(250);
-  smartDelay(2000);
+  smartDelay(100);
 
 //  if (millis() > 5000 && gps.charsProcessed() < 10)
 //    Serial.println(F("No GPS data received: check wiring"));
