@@ -8,12 +8,13 @@
    Code is prepared in PlatformIO, rename this file to `main.cpp` and put it in src folder.
 */
 #include <Arduino.h>
+#include <math.h>
 #include <TinyGPSPlus.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
 /* Assign a unique ID to magnetometer at the same time */
-Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(11111);
+Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(121);
 
 static const uint32_t GPSBaud = 9600;
 
@@ -79,7 +80,8 @@ void loop()
 
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  float heading = atan2(event.magnetic.y, event.magnetic.x);
+  //float heading = atan2(event.magnetic.x, event.magnetic.y);
+  float heading = atan2(event.magnetic.x, event.magnetic.y);
   
   // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
   // Find yours here: http://www.magnetic-declination.com/
@@ -89,15 +91,15 @@ void loop()
   heading += declinationAngle;
   
   // Correct for when signs are reversed.
-  if(heading < 0)
-    heading += 2*PI;
+//  if(heading < 0)
+//    heading += 2*PI;
     
   // Check for wrap due to addition of declination.
-  if(heading > 2*PI)
-    heading -= 2*PI;
+//  if(heading > 2*PI)
+//    heading -= 2*PI;
    
   // Convert radians to degrees for readability.
-  float headingDegrees = heading * 180/M_PI; 
+//  float headingDegrees = heading * 180/M_PI; 
   
   //  Serial.print("Heading (degrees): "); 
 
@@ -106,11 +108,11 @@ void loop()
   Serial.print(",");
   Serial.print(gps.location.lng(), 5);
   Serial.print(",");
-  Serial.println(headingDegrees);
-  
-//  delay(500);
-  smartDelay(500);
+//  Serial.println(headingDegrees);
+  Serial.println(heading);
+//  delay(250);
+  smartDelay(2000);
 
-  if (millis() > 5000 && gps.charsProcessed() < 10)
-    Serial.println(F("No GPS data received: check wiring"));
+//  if (millis() > 5000 && gps.charsProcessed() < 10)
+//    Serial.println(F("No GPS data received: check wiring"));
 }
